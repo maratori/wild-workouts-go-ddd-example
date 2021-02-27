@@ -93,12 +93,12 @@ func TestTrainingsFirestoreRepository_UpdateTraining(t *testing.T) {
 func TestTrainingsFirestoreRepository_GetTraining_not_exists(t *testing.T) {
 	repo := newFirebaseRepository(t)
 
-	trainingUUID := uuid.New().String()
+	trainingUUID := uuid.NewString()
 
 	tr, err := repo.GetTraining(
 		context.Background(),
 		trainingUUID,
-		training.MustNewUser(uuid.New().String(), training.Attendee),
+		training.MustNewUser(uuid.NewString(), training.Attendee),
 	)
 	assert.Nil(t, tr)
 	assert.EqualError(t, err, training.NotFoundError{trainingUUID}.Error())
@@ -115,7 +115,7 @@ func TestTrainingsFirestoreRepository_get_and_update_another_users_training(t *t
 
 	assertPersistedTrainingEquals(t, repo, tr)
 
-	requestingUser := training.MustNewUser(uuid.New().String(), training.Attendee)
+	requestingUser := training.MustNewUser(uuid.NewString(), training.Attendee)
 
 	_, err = repo.GetTraining(
 		context.Background(),
@@ -230,10 +230,10 @@ func TestTrainingsFirestoreRepository_FindTrainingsForUser(t *testing.T) {
 
 	ctx := context.Background()
 
-	userUUID := uuid.New().String()
+	userUUID := uuid.NewString()
 
 	tr1, err := training.NewTraining(
-		uuid.New().String(),
+		uuid.NewString(),
 		userUUID,
 		"User",
 		time.Now(),
@@ -242,7 +242,7 @@ func TestTrainingsFirestoreRepository_FindTrainingsForUser(t *testing.T) {
 	require.NoError(t, err)
 
 	tr2, err := training.NewTraining(
-		uuid.New().String(),
+		uuid.NewString(),
 		userUUID,
 		"User",
 		time.Now(),
@@ -252,7 +252,7 @@ func TestTrainingsFirestoreRepository_FindTrainingsForUser(t *testing.T) {
 
 	// this training should be not in the list
 	canceledTraining, err := training.NewTraining(
-		uuid.New().String(),
+		uuid.NewString(),
 		userUUID,
 		"User",
 		time.Now(),
@@ -293,8 +293,8 @@ func newRandomTrainingTime() time.Time {
 func newExampleTraining(t *testing.T) *training.Training {
 	t.Helper()
 	tr, err := training.NewTraining(
-		uuid.New().String(),
-		uuid.New().String(),
+		uuid.NewString(),
+		uuid.NewString(),
 		"User",
 		newRandomTrainingTime(),
 	)
@@ -306,8 +306,8 @@ func newExampleTraining(t *testing.T) *training.Training {
 func newCanceledTraining(t *testing.T) *training.Training {
 	t.Helper()
 	tr, err := training.NewTraining(
-		uuid.New().String(),
-		uuid.New().String(),
+		uuid.NewString(),
+		uuid.NewString(),
 		"User",
 		newRandomTrainingTime(),
 	)

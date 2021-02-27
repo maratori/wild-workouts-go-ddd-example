@@ -12,8 +12,8 @@ import (
 )
 
 func TestNewTraining(t *testing.T) {
-	trainingUUID := uuid.New().String()
-	userUUID := uuid.New().String()
+	trainingUUID := uuid.NewString()
+	userUUID := uuid.NewString()
 	userName := "user name"
 	trainingTime := time.Now().Round(time.Hour)
 
@@ -27,8 +27,8 @@ func TestNewTraining(t *testing.T) {
 }
 
 func TestNewTraining_invalid(t *testing.T) {
-	trainingUUID := uuid.New().String()
-	userUUID := uuid.New().String()
+	trainingUUID := uuid.NewString()
+	userUUID := uuid.NewString()
 	trainingTime := time.Now().Round(time.Hour)
 	userName := "user name"
 
@@ -72,8 +72,8 @@ func TestTraining_MoreThanDayUntilTraining(t *testing.T) {
 
 func newExampleTraining(t *testing.T) *training.Training {
 	tr, err := training.NewTraining(
-		uuid.New().String(),
-		uuid.New().String(),
+		uuid.NewString(),
+		uuid.NewString(),
 		"user name",
 		time.Now().AddDate(0, 0, 5).Round(time.Hour),
 	)
@@ -84,8 +84,8 @@ func newExampleTraining(t *testing.T) *training.Training {
 
 func newExampleTrainingWithTime(t *testing.T, trainingTime time.Time) *training.Training {
 	tr, err := training.NewTraining(
-		uuid.New().String(),
-		uuid.New().String(),
+		uuid.NewString(),
+		uuid.NewString(),
 		"user name",
 		trainingTime,
 	)

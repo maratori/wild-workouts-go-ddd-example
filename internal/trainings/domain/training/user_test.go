@@ -11,13 +11,13 @@ import (
 )
 
 func TestIsUserAllowedToSeeTraining(t *testing.T) {
-	attendee1, err := training.NewUser(uuid.New().String(), training.Attendee)
+	attendee1, err := training.NewUser(uuid.NewString(), training.Attendee)
 	require.NoError(t, err)
 
-	attendee2, err := training.NewUser(uuid.New().String(), training.Attendee)
+	attendee2, err := training.NewUser(uuid.NewString(), training.Attendee)
 	require.NoError(t, err)
 
-	trainer, err := training.NewUser(uuid.New().String(), training.Trainer)
+	trainer, err := training.NewUser(uuid.NewString(), training.Trainer)
 	require.NoError(t, err)
 
 	testCases := []struct {
@@ -30,7 +30,7 @@ func TestIsUserAllowedToSeeTraining(t *testing.T) {
 			Name: "attendees_training",
 			CreateTraining: func(t *testing.T) *training.Training {
 				tr, err := training.NewTraining(
-					uuid.New().String(),
+					uuid.NewString(),
 					attendee1.UUID(),
 					"user name",
 					time.Now(),
@@ -46,7 +46,7 @@ func TestIsUserAllowedToSeeTraining(t *testing.T) {
 			Name: "another_attendees_training",
 			CreateTraining: func(t *testing.T) *training.Training {
 				tr, err := training.NewTraining(
-					uuid.New().String(),
+					uuid.NewString(),
 					attendee1.UUID(),
 					"user name",
 					time.Now(),
@@ -62,7 +62,7 @@ func TestIsUserAllowedToSeeTraining(t *testing.T) {
 			Name: "trainer",
 			CreateTraining: func(t *testing.T) *training.Training {
 				tr, err := training.NewTraining(
-					uuid.New().String(),
+					uuid.NewString(),
 					attendee1.UUID(),
 					"user name",
 					time.Now(),

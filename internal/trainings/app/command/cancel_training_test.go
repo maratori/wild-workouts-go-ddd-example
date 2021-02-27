@@ -105,7 +105,7 @@ func TestCancelTraining(t *testing.T) {
 
 func createExampleTraining(t *testing.T, requestingUserID string, trainingTime time.Time) *training.Training {
 	tr, err := training.NewTraining(
-		uuid.New().String(),
+		uuid.NewString(),
 		requestingUserID,
 		"foo",
 		trainingTime,

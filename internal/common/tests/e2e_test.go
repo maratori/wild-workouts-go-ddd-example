@@ -16,7 +16,7 @@ func TestCreateTraining(t *testing.T) {
 	hour := RelativeDate(12, 12)
 
 	userID := "TestCreateTraining-user"
-	trainerJWT := FakeTrainerJWT(t, uuid.New().String())
+	trainerJWT := FakeTrainerJWT(t, uuid.NewString())
 	attendeeJWT := FakeAttendeeJWT(t, userID)
 	trainerHTTPClient := NewTrainerHTTPClient(t, trainerJWT)
 	trainingsHTTPClient := NewTrainingsHTTPClient(t, attendeeJWT)

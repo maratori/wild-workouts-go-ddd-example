@@ -22,7 +22,7 @@ import (
 func TestHoursAvailability(t *testing.T) {
 	t.Parallel()
 
-	token := tests.FakeTrainerJWT(t, uuid.New().String())
+	token := tests.FakeTrainerJWT(t, uuid.NewString())
 	client := tests.NewTrainerHTTPClient(t, token)
 
 	hour := tests.RelativeDate(11, 12)
@@ -61,7 +61,7 @@ func TestHoursAvailability(t *testing.T) {
 func TestUnauthorizedForAttendee(t *testing.T) {
 	t.Parallel()
 
-	token := tests.FakeAttendeeJWT(t, uuid.New().String())
+	token := tests.FakeAttendeeJWT(t, uuid.NewString())
 	client := tests.NewTrainerHTTPClient(t, token)
 
 	hour := tests.RelativeDate(11, 13)

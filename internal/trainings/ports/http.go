@@ -68,7 +68,7 @@ func (h HttpServer) CreateTraining(w http.ResponseWriter, r *http.Request) {
 	}
 
 	cmd := command.ScheduleTraining{
-		TrainingUUID: uuid.New().String(),
+		TrainingUUID: uuid.NewString(),
 		UserUUID:     user.UUID,
 		UserName:     user.DisplayName,
 		TrainingTime: postTraining.Time,

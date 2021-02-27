@@ -18,7 +18,7 @@ import (
 func TestCreateTraining(t *testing.T) {
 	t.Parallel()
 
-	token := tests.FakeAttendeeJWT(t, uuid.New().String())
+	token := tests.FakeAttendeeJWT(t, uuid.NewString())
 	client := tests.NewTrainingsHTTPClient(t, token)
 
 	hour := tests.RelativeDate(10, 12)
@@ -37,7 +37,7 @@ func TestCreateTraining(t *testing.T) {
 func TestCancelTraining(t *testing.T) {
 	t.Parallel()
 
-	token := tests.FakeAttendeeJWT(t, uuid.New().String())
+	token := tests.FakeAttendeeJWT(t, uuid.NewString())
 	client := tests.NewTrainingsHTTPClient(t, token)
 
 	hour := tests.RelativeDate(10, 13)
