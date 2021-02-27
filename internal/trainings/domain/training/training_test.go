@@ -59,7 +59,7 @@ func TestTraining_UpdateNotes_too_long(t *testing.T) {
 	tr := newExampleTraining(t)
 
 	err := tr.UpdateNotes(strings.Repeat("x", 1001))
-	assert.EqualError(t, err, training.ErrNoteTooLong.Error())
+	assert.ErrorIs(t, err, training.ErrNoteTooLong)
 }
 
 func TestTraining_MoreThanDayUntilTraining(t *testing.T) {

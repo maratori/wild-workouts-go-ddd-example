@@ -21,5 +21,5 @@ func TestTraining_Cancel(t *testing.T) {
 func TestTraining_Cancel_already_canceled(t *testing.T) {
 	tr := newCanceledTraining(t)
 
-	assert.EqualError(t, tr.Cancel(), training.ErrTrainingAlreadyCanceled.Error())
+	assert.ErrorIs(t, tr.Cancel(), training.ErrTrainingAlreadyCanceled)
 }

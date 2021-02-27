@@ -85,10 +85,15 @@ func TestIsUserAllowedToSeeTraining(t *testing.T) {
 			if c.ExpectedIsAllowed {
 
 			} else {
-				assert.EqualError(
+				var forbiddenErr training.ForbiddenToSeeTrainingError
+				require.ErrorAs(t, err, &forbiddenErr)
+				assert.Equal(
 					t,
-					err,
-					training.ForbiddenToSeeTrainingError{c.User.UUID(), tr.UserUUID()}.Error(),
+					training.ForbiddenToSeeTrainingError{
+						RequestingUserUUID: c.User.UUID(),
+						TrainingOwnerUUID:  tr.UserUUID(),
+					},
+					forbiddenErr,
 				)
 			}
 		})

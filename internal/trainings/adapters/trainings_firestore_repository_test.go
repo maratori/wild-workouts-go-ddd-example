@@ -101,7 +101,9 @@ func TestTrainingsFirestoreRepository_GetTraining_not_exists(t *testing.T) {
 		training.MustNewUser(uuid.New().String(), training.Attendee),
 	)
 	assert.Nil(t, tr)
-	assert.EqualError(t, err, training.NotFoundError{trainingUUID}.Error())
+	var notFoundErr training.NotFoundError
+	require.ErrorAs(t, err, &notFoundErr)
+	assert.Equal(t, training.NotFoundError{TrainingUUID: trainingUUID}, notFoundErr)
 }
 
 func TestTrainingsFirestoreRepository_get_and_update_another_users_training(t *testing.T) {
@@ -122,13 +124,15 @@ func TestTrainingsFirestoreRepository_get_and_update_another_users_training(t *t
 		tr.UUID(),
 		requestingUser,
 	)
-	assert.EqualError(
+	var forbiddenErr training.ForbiddenToSeeTrainingError
+	require.ErrorAs(t, err, &forbiddenErr)
+	assert.Equal(
 		t,
-		err,
 		training.ForbiddenToSeeTrainingError{
 			RequestingUserUUID: requestingUser.UUID(),
 			TrainingOwnerUUID:  tr.UserUUID(),
-		}.Error(),
+		},
+		forbiddenErr,
 	)
 
 	err = repo.UpdateTraining(
@@ -139,13 +143,14 @@ func TestTrainingsFirestoreRepository_get_and_update_another_users_training(t *t
 			return nil, nil
 		},
 	)
-	assert.EqualError(
+	require.ErrorAs(t, err, &forbiddenErr)
+	assert.Equal(
 		t,
-		err,
 		training.ForbiddenToSeeTrainingError{
 			RequestingUserUUID: requestingUser.UUID(),
 			TrainingOwnerUUID:  tr.UserUUID(),
-		}.Error(),
+		},
+		forbiddenErr,
 	)
 }
 

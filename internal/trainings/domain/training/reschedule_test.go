@@ -31,9 +31,15 @@ func TestTraining_RescheduleTraining_less_than_24h_before(t *testing.T) {
 
 	err := tr.RescheduleTraining(rescheduleRequestTime)
 
-	assert.EqualError(t, err, training.CantRescheduleBeforeTimeError{
-		TrainingTime: tr.Time(),
-	}.Error())
+	var expectedError training.CantRescheduleBeforeTimeError
+	require.ErrorAs(t, err, &expectedError)
+	assert.Equal(
+		t,
+		training.CantRescheduleBeforeTimeError{
+			TrainingTime: tr.Time(),
+		},
+		expectedError,
+	)
 }
 
 func TestTraining_ProposeReschedule_by_attendee(t *testing.T) {
@@ -107,7 +113,7 @@ func TestTraining_ProposeReschedule_approve_by_proposer(t *testing.T) {
 func TestTraining_ApproveReschedule_not_proposed(t *testing.T) {
 	tr := newExampleTrainingWithTime(t, time.Now().Round(time.Hour))
 
-	assert.EqualError(t, tr.ApproveReschedule(training.Trainer), training.ErrNoRescheduleRequested.Error())
+	assert.ErrorIs(t, tr.ApproveReschedule(training.Trainer), training.ErrNoRescheduleRequested)
 }
 
 func TestTraining_RejectRescheduleTraining(t *testing.T) {
